@@ -90,7 +90,6 @@ ifneq ($(INSTALL_DEFINC),$(INSTALL_INC))
   SED_PC+= -e "s|^includedir=.*|includedir=$(INSTALL_INC)|"
 endif
 
-FILE_T= luajit
 FILE_A= libluajit.a
 FILE_SO= libluajit.so
 FILE_MAN= luajit.1
@@ -123,14 +122,14 @@ endif
 INSTALL_DEP= src/luajit
 
 default all $(INSTALL_DEP):
-	@echo "==== Building LuaJIT $(MMVERSION) ===="
+	@echo "==== Building LJVM $(MMVERSION) ===="
 	$(MAKE) -C src
-	@echo "==== Successfully built LuaJIT $(MMVERSION) ===="
+	@echo "==== Successfully built LJVM $(MMVERSION) ===="
 
 install: $(INSTALL_DEP)
 	@echo "==== Installing LuaJIT $(VERSION) to $(PREFIX) ===="
 	$(MKDIR) $(INSTALL_DIRS)
-	cd src && $(INSTALL_X) $(FILE_T) $(INSTALL_T)
+	cd src && $(INSTALL_X) $(INSTALL_T)
 	cd src && test -f $(FILE_A) && $(INSTALL_F) $(FILE_A) $(INSTALL_STATIC) || :
 	$(RM) $(INSTALL_DYN) $(INSTALL_SHORT1) $(INSTALL_SHORT2)
 	cd src && test -f $(FILE_SO) && \

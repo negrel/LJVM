@@ -538,9 +538,8 @@ LIB_VMDEFP= $(LIB_VMDEF)
 LUAJIT_O= luajit.o
 LUAJIT_A= libluajit.a
 LUAJIT_SO= libluajit.so
-LUAJIT_T= luajit
 
-ALL_T= $(LUAJIT_T) $(LUAJIT_A) $(LUAJIT_SO) $(HOST_T)
+ALL_T= $(LUAJIT_A) $(LUAJIT_SO) $(HOST_T)
 ALL_HDRGEN= lj_bcdef.h lj_ffdef.h lj_libdef.h lj_recdef.h lj_folddef.h \
 	    host/buildvm_arch.h luajit.h
 ALL_GEN= $(LJVM_S) $(ALL_HDRGEN) luajit_relver.txt $(LIB_VMDEFP)
@@ -553,14 +552,13 @@ ALL_RM= $(ALL_T) $(ALL_GEN) *.o host/*.o $(WIN_RM)
 
 # Mixed mode defaults.
 TARGET_O= $(LUAJIT_A)
-TARGET_T= $(LUAJIT_T) $(LUAJIT_SO)
+TARGET_T= $(LUAJIT_SO)
 TARGET_DEP= $(LIB_VMDEF) $(LUAJIT_SO)
 
 ifeq (Windows,$(TARGET_SYS))
   TARGET_DYNCC= $(STATIC_CC)
   LJVM_MODE= peobj
   LJVM_BOUT= $(LJVM_O)
-  LUAJIT_T= luajit.exe
   ifeq (cygwin,$(HOST_MSYS))
     LUAJIT_SO= cyg$(TARGET_DLLNAME)
   else
@@ -599,7 +597,7 @@ endif
 
 ifeq (static,$(BUILDMODE))
   TARGET_DYNCC= @:
-  TARGET_T= $(LUAJIT_T)
+  TARGET_T= $(LUAJIT_A)
   TARGET_DEP= $(LIB_VMDEF)
 else
 ifeq (dynamic,$(BUILDMODE))
@@ -638,10 +636,6 @@ amalg:
 
 clean:
 	$(HOST_RM) $(ALL_RM)
-
-libbc:
-	./$(LUAJIT_T) host/genlibbc.lua -o host/buildvm_libbc.h $(LJLIB_C)
-	$(MAKE) all
 
 depend:
 	@for file in $(ALL_HDRGEN); do \
@@ -750,8 +744,6 @@ $(LUAJIT_SO): $(LJVMCORE_O)
 
 $(LUAJIT_T): $(TARGET_O) $(LUAJIT_O) $(TARGET_DEP)
 	$(E) "LINK      $@"
-	$(Q)$(TARGET_LD) $(TARGET_ALDFLAGS) -o $@ $(LUAJIT_O) $(TARGET_O) $(TARGET_ALIBS)
-	$(Q)$(TARGET_STRIP) $@
-	$(E) "OK        Successfully built LuaJIT"
+	$(E) "OK        Successfully built LJVM"
 
 ##############################################################################
