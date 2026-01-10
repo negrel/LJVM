@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+fname() {
+	echo "$(basename ${1%.*})"
+}
+
+dot -Tsvg <(
+	echo "digraph {"
+	echo "splines=ortho"
+
+	while read f; do
+		while read inc; do
+			echo "$(fname "$f") -> $(fname "$inc")"
+		done < <(grep '#include "' "$f" | sed -E 's/#include "(.*)"/\1/')
+	done < <(find LuaJIT/src/ -type f | grep -E '.*\.(c|h)')
+
+	echo "}"
+)
