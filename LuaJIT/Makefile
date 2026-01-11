@@ -167,6 +167,9 @@ amalg:
 	$(MAKE) -C src amalg
 	@echo "==== Successfully built LuaJIT $(MMVERSION) (amalgamation) ===="
 
+depend:
+	$(MAKE) XCFLAGS=-DLUAJIT_UNWIND_EXTERNAL -C src depend
+
 clean:
 	$(MAKE) -C src clean
 
