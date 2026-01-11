@@ -239,7 +239,7 @@ ljamalg.o: ljamalg.c lua.h luaconf.h lauxlib.h lj_assert.c lj_obj.h \
  lj_crecord.c lj_crecord.h lj_ffrecord.c lj_recdef.h lj_asm.c lj_asm.h \
  lj_emit_*.h lj_asm_*.h lj_trace.c lj_gdbjit.h lj_gdbjit.c lj_alloc.c \
  lib_aux.c lib_base.c lj_libdef.h lib_math.c lib_string.c lib_table.c \
- lib_io.c lib_package.c lib_debug.c lib_bit.c lib_jit.c \
+ lib_io.c lib_os.c lib_package.c lib_debug.c lib_bit.c lib_jit.c \
  lib_ffi.c lib_buffer.c
 host/buildvm.o: host/buildvm.c host/buildvm.h lj_def.h lua.h luaconf.h \
  lj_arch.h lj_obj.h lj_def.h lj_arch.h lj_gc.h lj_obj.h lj_bc.h lj_ir.h \
